@@ -40,9 +40,14 @@ namespace Lingkail.ModbusMantrap
 
                 int numberOfValuesInput = 8; //we using an 8 input devices
                 bool[] serverResponse = modbusClient.ReadCoils(0, numberOfValuesInput);
+                bool[] inputResponse = modbusClient.ReadDiscreteInputs(0, numberOfValuesInput);
                 for (int i = 0; i<numberOfValuesInput; i++)
                 {
-                    Console.WriteLine("port "+i.ToString()+": "+serverResponse[i].ToString());
+                    Console.WriteLine("output port "+i.ToString()+": "+serverResponse[i].ToString());
+                }
+                for (int i = 0; i<numberOfValuesInput; i++)
+                {
+                    Console.WriteLine("input x "+i.ToString()+": "+inputResponse[i].ToString());
                 }
                 for (int i = 0; i < 8; i++)
                 {

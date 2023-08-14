@@ -1,6 +1,8 @@
 ﻿using EasyModbus;
 using System.Runtime.ExceptionServices;
 using System.Threading;
+using static System.Net.Mime.MediaTypeNames;
+
 
 namespace Lingkail.ModbusMantrap
 { 
@@ -15,10 +17,19 @@ namespace Lingkail.ModbusMantrap
         private static bool coilsToSend;
         private static void Main()
         {
+            
             Console.WriteLine("welcome to FSM");
+            initCheckPoint();
             setupModbusController();
             //run the mantrapFSM
             mantrapFSM();
+        }
+
+        private static void initCheckPoint()
+        {
+            Checkpoint checkpoint = new Checkpoint();
+            checkpoint.run();
+            //to stop, call checkpoint.stop();
         }
 
         private static void setupModbusController()
@@ -43,11 +54,11 @@ namespace Lingkail.ModbusMantrap
                 bool[] inputResponse = modbusClient.ReadDiscreteInputs(0, numberOfValuesInput);
                 for (int i = 0; i<numberOfValuesInput; i++)
                 {
-                    Console.WriteLine("output port "+i.ToString()+": "+serverResponse[i].ToString());
+                    Console.WriteLine("output port "+(i+1).ToString()+": "+serverResponse[i].ToString());
                 }
                 for (int i = 0; i<numberOfValuesInput; i++)
                 {
-                    Console.WriteLine("input x "+i.ToString()+": "+inputResponse[i].ToString());
+                    Console.WriteLine("input x"+(i+1).ToString()+": "+inputResponse[i].ToString());
                 }
                 for (int i = 0; i < 8; i++)
                 {
